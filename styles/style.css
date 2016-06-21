@@ -1,0 +1,154 @@
+
+* {
+	margin: 0;
+}
+html, body {
+	height: 100%;
+	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+	background-color: #C9BBA5;
+	color: #331700;
+}
+
+.footer, .content:after {
+	height: 142px; 
+}
+.footer {
+	background-color: #331700;
+	text-align: center;
+}
+.footer p {
+	padding-top: 30px;
+	color: #C9BBA5;
+}
+
+/** header / navbar **/
+
+.header {
+	padding-bottom: 100px;
+	text-align: center;
+}
+
+.header h2 {
+	margin-top: 50px;
+	font-size: 18pt;
+}
+
+ul.nav-bar {
+	list-style-type: none;
+	padding: 0;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.nav-bar li {
+	float: left;
+	display: block;
+	width: calc(100%/6);
+	font-size: 14pt;
+	text-align: center;
+}
+
+.nav-bar a {
+	color: #331700;
+	text-decoration: none;
+}
+
+.nav-bar a:hover {
+	color: rgb(0, 150, 0);
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #C9BBA5;
+	color: #331700;
+	width: calc(80%/6);
+}
+
+.dropdown-content a {
+	color: #331700;
+	padding: 8px;
+	display: block;
+}
+
+.dropdown-link:hover .dropdown-content {
+	display: block;
+}
+
+/** content **/
+
+.content {
+	min-height: 100%;
+	/* equal to footer height */
+	margin-bottom: -100px; 
+	margin-top: 50px;
+
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+
+	font-size: 14pt;
+	line-height: 200%;
+}
+.content:after {
+	content: "";
+	display: block;
+}
+
+.content figure {
+	width: 500px;
+	float: left;
+	margin: 50px;
+}
+
+.content figcaption {
+	text-align: center;
+	font-size: 12pt;
+}
+
+.content img {
+	width: 500px;
+	height: auto;
+}
+
+.content h2 {
+	text-align: center;
+	font-size: 24pt;
+}
+
+.content h3 {
+	text-align: center;
+	font-size: 18pt;
+}
+
+.content table {
+	border-spacing: 5px;
+}
+
+.content table, .content tr, .content td {
+	border: 1px solid black;
+}
+
+.content tr, .content td {
+	padding: 10px;
+}
+
+.content th {
+	font-weight: bold;
+}
+
+/** misc **/
+
+hr {
+	border: none;
+	height: 3px;
+	width: 60%;
+	color: black;
+	background-color: black;
+
+	margin-top: 80px;
+	margin-bottom: 80px;
+	margin-right: auto;
+	margin-left: auto;
+}
