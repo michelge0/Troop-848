@@ -9,48 +9,54 @@ html, body {
 	color: #331700;
 }
 
-.footer, .content:after {
-	height: 142px; 
-}
-.footer {
+/** currently unused **/
+footer {
 	background-color: #331700;
+	color: #C9BBA5;
 	text-align: center;
 }
-.footer p {
-	padding-top: 30px;
-	color: #C9BBA5;
-}
 
-/** header / navbar **/
+/** header **/
 
 .header {
-	padding-bottom: 100px;
-	text-align: center;
+	/*padding-bottom: 200px;
+	padding-top: 200px;*/
+	background-color: #331700;
+	color: #C9BBA5;
+	font-size: 64pt;
+	padding: 25px;
+/*	background-image: url('../images/fullscene.jpg');
+	background-repeat: no-repeat;
+	background-size: 100% 400px;*/
 }
 
-.header h2 {
-	margin-top: 50px;
-	font-size: 18pt;
+.header strong {
+	color: rgb(0, 150, 0);
 }
+
+/** navbar **/
 
 ul.nav-bar {
 	list-style-type: none;
 	padding: 0;
-	width: 80%;
+	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
+	margin-bottom: 100px;
+	z-index: 100;
 }
 
 .nav-bar li {
 	float: left;
 	display: block;
-	width: calc(100%/6);
+	width: calc(100%/4);
 	font-size: 14pt;
 	text-align: center;
+	background-color: #331700;
 }
 
 .nav-bar a {
-	color: #331700;
+	color: #C9BBA5;
 	text-decoration: none;
 }
 
@@ -58,30 +64,39 @@ ul.nav-bar {
 	color: rgb(0, 150, 0);
 }
 
-.dropdown-content {
-	display: none;
-	position: absolute;
-	background-color: #C9BBA5;
-	color: #331700;
-	width: calc(80%/6);
+.affix {
+	top: 0;
 }
 
-.dropdown-content a {
-	color: #331700;
-	padding: 8px;
-	display: block;
+.dropdown-link {
+	color: #C9BBA5;
 }
 
 .dropdown-link:hover .dropdown-content {
+	visibility: visible;
+	opacity: 1;
+}
+
+.dropdown-content {
+	visibility: hidden;
+	position: absolute;
+	background-color: #331700;
+	width: calc(100%/4);
+
+	opacity: 0;
+	transition: opacity .35s;
+}
+
+.dropdown-content a {
+	color: #C9BBA5;
 	display: block;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 /** content **/
 
 .content {
-	min-height: 100%;
-	/* equal to footer height */
-	margin-bottom: -100px; 
 	margin-top: 50px;
 
 	margin-left: auto;
