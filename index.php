@@ -13,7 +13,13 @@
 
 <body>
 
-<header class="header">TROOP <strong>848</strong></header>
+<header class="header"> TROOP <strong>848</strong>
+	<div class="panel">
+		<button> sign out </button>
+		<button> my account </button>
+		<p> signed in as Michel Ge </p>
+	</div>
+</header>
 
 <ul class="nav-bar" data-spy="affix" data-offset-top="160">
 <li><a href="#">Announcements</a></li>
@@ -88,5 +94,6 @@
 	Hello?
 	</div>
 </div>
+<script> $( '#calendar' ).calendario(); </script>
 </body>
 </html>
