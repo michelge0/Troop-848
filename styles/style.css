@@ -147,49 +147,75 @@ ul.nav-bar {
 	display: block;
 }
 
-.content figure {
+.post figure {
 	width: 500px;
 	float: left;
 	margin: 50px;
 }
 
-.content figcaption {
+.post figcaption {
 	text-align: center;
 	font-size: 12pt;
 }
 
-.content img {
+.post img {
 	width: 500px;
 	height: auto;
 }
 
-.content h2 {
+.post {
+	margin-bottom: 100px;
+}
+
+.post h2 {
 	text-align: center;
 	font-size: 24pt;
 }
 
-.content h3 {
+.post h3 {
 	text-align: center;
 	font-size: 18pt;
 }
 
-/*.content table {
-	border-spacing: 5px;
+.post h4 {
+	text-align: center;
+	font-size: 14pt;
 }
 
-.content table, .content tr, .content td {
-	border: 1px solid black;
+/* sidebar */
+
+.nav {
+	text-align: center;
 }
 
-.content tr, .content td {
-	padding: 10px;
+.nav li > a {
+	color: grey;
+	background-color: #C9BBA5;
 }
 
-.content th {
+.nav li > a:hover {
+	color: black;
+	background-color: #C9BBA5;
+}
+
+.nav .active > a {
+	background-color: #C9BBA5;
+	color: black;
+	font-style: italic;
 	font-weight: bold;
-}*/
+}
 
-/** misc **/
+a:hover, a:visited, a:link, a:active {
+	text-decoration: none;
+}
+
+.nav.affix {
+	top: 100px;
+	right: 270px;
+}
+
+
+/* misc */
 
 hr {
 	border: none;
@@ -202,4 +228,113 @@ hr {
 	margin-bottom: 80px;
 	margin-right: auto;
 	margin-left: auto;
+}
+
+/* events calender.php */
+
+.events-list {
+	margin-right: auto;
+	margin-left: auto;
+	width: 1000px;
+
+}
+
+.event-title {
+	text-align: right;
+	display: inline-block;
+}
+
+.event-date {
+	display: inline-block;
+	float: right;
+	margin-right: 20px;
+}
+
+/* calendar */
+
+.calendar-start {
+	display: inline-block;
+	width: 40%;
+}
+
+.calendar-end {
+	float: right;
+	display: inline-block;
+	width: 40%;
+}
+
+.calendar-description {
+	width: 80%;
+	display: inline-block;
+}
+
+.calendar-link {
+	display: inline-block;
+	margin-right: 30px;
+	float: right;
+}
+
+/* event */
+
+.event-wrapper {
+	margin-top: 100px;
+	width: 80%;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.event-title {
+	width: 100%;
+	background-color: #fff;
+	border: 1px solid #ddd;
+}
+
+.event-title h2 {
+	font-size: 28pt;
+	font-weight: bold;
+	text-align: left;
+	margin-left: 20px;
+}
+
+.event-title h4 {
+	font-size: 18pt;
+	font-weight: bold;
+	text-align: right;
+	margin-right: 30px;
+}
+
+.event-title p {
+	font-size: 16pt;
+	text-align: left;
+	margin-left: 40px;
+}
+
+.event-title .checkbox {
+	float: left;
+	margin-left: 40px;
+}
+
+.event-header {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-top: 2px;
+
+	font-size: 24pt;
+	text-align: left;
+	padding-left: 20px;
+
+	background-color: #eee;
+	border: 1px solid #ddd;
+}
+
+.event-header:hover {
+	cursor: pointer;
+	background-color: #ccc;
+	border: 1px solid #ccc;
+}
+
+.event-section {
+	padding-left: 15px;
+	text-align: left;
 }

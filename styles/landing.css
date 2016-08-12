@@ -1,0 +1,97 @@
+html {
+/*	background: url(../images/scouts.jpg) no-repeat center center fixed;
+	background-size: cover;*/
+
+	min-height: 100%;
+}
+
+body {
+	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+	margin: 0 0 200px;
+	overflow: hidden;
+}
+
+/* background slideshow */
+
+.slideshow {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.slideshow-image {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+.title, .footer {
+	position: absolute;
+	background-color: rgba(201, 187, 165, .7);
+	color: rgba(51, 23, 0, 1);
+	width: 100%;
+}
+
+strong {
+	color: rgba(150, 0, 0, 1);
+}
+
+.title {
+	height: 120px;
+
+	font-size: 60pt;
+	text-align: center;
+}
+
+.footer {
+	height: 200px;
+
+	left: 0;
+	bottom: 0;
+}
+
+.description {
+	position: absolute;
+	width: 1000px;
+	height: 140px;
+	margin: 30px;
+
+	font-size: 20pt;
+}
+
+.button-main, .button-secondary {
+	float: right;
+	margin-left: 50px;
+	margin-right: 50px;
+	margin-top: 60px;
+
+	font-size: 28pt;	
+
+    transition: all .2s;
+    z-index: 10;
+
+    background-color: none;
+}
+
+.button-main:hover, .button-secondary:hover {
+	cursor: pointer;
+}
+
+.button-main {
+    border: 3px solid rgb(150, 0, 0);
+    border-radius: 6px;
+    color: rgb(150, 0, 0);
+	padding: 10px;
+	width: 225px;
+	text-align: center;
+}
+
+.button-main:hover {
+	background-color: rgb(150, 0, 0);
+	color: rgb(201, 187, 165);
+}
+
+.button-secondary {
+	margin-right: 100px;
+}

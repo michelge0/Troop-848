@@ -1,3 +1,7 @@
+<?php
+	include("database-helper.php");
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -45,34 +49,33 @@
 	        <th>Name</th>
 	        <th>Patrol</th>
 	        <th>Email</th>
+	        <th>Site Rank</th>
     	</tr>
     </thead>
     <tbody>
-     	<tr>
-	        <td>Michel Ge</td>
-	        <td>The Green Snakes</td>
-	        <td>strengthofthepen@gmail.com</td>
-     	</tr>
-     	<tr>
-	        <td>Michel Ge</td>
-	        <td>The Green Snakes</td>
-	        <td>strengthofthepen@gmail.com</td>
-     	</tr>
-     	<tr>
-	        <td>Michel Ge</td>
-	        <td>The Green Snakes</td>
-	        <td>strengthofthepen@gmail.com</td>
-     	</tr>
-     	<tr>
-	        <td>Michel Ge</td>
-	        <td>The Green Snakes</td>
-	        <td>strengthofthepen@gmail.com</td>
-     	</tr>
-     	<tr>
-	        <td>Michel Ge</td>
-	        <td>The Green Snakes</td>
-	        <td>strengthofthepen@gmail.com</td>
-     	</tr>
+    <?php
+    	$result = $mysqli->query("SELECT * FROM roster")->fetch_all(MYSQLI_ASSOC);
+		if ($result) {
+			for ($i = 0; $i < count($result); $i++) {
+				echo "<tr>";
+				$row = $result[$i];
+				$name = $row['name'];
+				$email = $row['email'];
+				$patrol = $row['patrol'];
+				$permissions = 0;
+				switch($row['permissions']) {
+					case 0: $permissions = "User"; break;
+					case 1: $permissions = "Editor"; break;
+					case 2: $permissions = "Admin"; break;
+				}
+				echo "<td>$name</td>";
+				echo "<td>$patrol</td>";
+				echo "<td>$email</td>";
+				echo "<td>$permissions</td>";
+				echo "</tr>";
+			}
+		}
+    ?>
     </tbody>
   </table>
 </div>
