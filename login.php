@@ -14,6 +14,7 @@
         if ($result && $result->num_rows > 0) {
             $_SESSION["signedIn"] = true;
             $_SESSION["name"] = $name;
+            $_SESSION["email"] = $email;
 
             $permission_string = $result->fetch_all(MYSQLI_ASSOC)[0]['permissions'];
             switch ($permission_string) {
@@ -39,7 +40,7 @@
 <title>Personal Website</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
 
-    <script src="logout.js"></script>
+    <script src="scripts/logout.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <script>
     function renderButton() {

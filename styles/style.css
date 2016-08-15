@@ -30,6 +30,11 @@ footer {
 	background-size: 100% 400px;*/
 }
 
+.header a {
+	color: #C9BBA5;
+	text-decoration: none;
+}
+
 .header strong {
 	color: rgb(150, 0, 0);
 }
@@ -84,7 +89,7 @@ ul.nav-bar {
 .nav-bar li {
 	float: left;
 	display: block;
-	width: calc(100%/4);
+	width: 20%;
 	font-size: 18pt;
 	text-align: center;
 	background-color: #331700;
@@ -116,7 +121,7 @@ ul.nav-bar {
 	visibility: hidden;
 	position: absolute;
 	background-color: #331700;
-	width: calc(100%/4);
+	width: 20%;
 	z-index: 100;
 
 	opacity: 0;
@@ -232,19 +237,19 @@ hr {
 
 /* events calender.php */
 
-.events-list {
+.calendar-events-list {
 	margin-right: auto;
 	margin-left: auto;
 	width: 1000px;
 
 }
 
-.event-title {
+.calendar-event-title {
 	text-align: right;
 	display: inline-block;
 }
 
-.event-date {
+.calendar-event-date {
 	display: inline-block;
 	float: right;
 	margin-right: 20px;
@@ -278,6 +283,7 @@ hr {
 
 .event-wrapper {
 	margin-top: 100px;
+	margin-bottom: 100px;
 	width: 80%;
 	text-align: center;
 	margin-left: auto;
@@ -288,9 +294,10 @@ hr {
 	width: 100%;
 	background-color: #fff;
 	border: 1px solid #ddd;
+	overflow: hidden;
 }
 
-.event-title h2 {
+.event-title h3 {
 	font-size: 28pt;
 	font-weight: bold;
 	text-align: left;

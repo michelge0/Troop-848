@@ -1,6 +1,6 @@
 <script src="scripts/logout.js"></script>
 
-<header class="header"> TROOP <strong>848</strong>
+<header class="header"> <a href="index.php">TROOP <strong>848</strong></a>
 	<div class="panel">
 		<button onclick="logOut();"> sign out </button>
 		<button onclick="window.location = 'my-account.php';""> my account </button>
@@ -9,7 +9,8 @@
 </header>
 
 <ul class="nav-bar" data-spy="affix" data-offset-top="160">
-<li><a href="roster-admin.php">Roster</a></li>
+<li><a href="index.php">Home</a></li>
+<li><a href="roster.php">Roster</a></li>
 <li class="dropdown-link">
 	Scouting
 	<div class="dropdown-content">

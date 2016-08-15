@@ -1,13 +1,32 @@
 <?php
-session_start();
+
+require('authenticate.php');
 require('database-helper.php');
 
 if (isset($_GET['eventid'])) {
     $eventid = $_GET['eventid'];
 } else {
-    // redirect to error page
-    die("Error.");
+    die("Error: the event you're looking for doesn't seem to exist.");
 }
+
+$name = $_SESSION['name'];
+$email = $_SESSION['email'];
+
+$userid = $mysqli->query("SELECT * FROM roster WHERE name='$name' AND email='$email'")->fetch_assoc()['id'];
+
+if (isset($_POST['going'])) {
+    $going = $_POST['going'];
+
+    // updates the response, creating a new response if it doesn't exist already
+    $mysqli->query("UPDATE responses SET response=$going WHERE userid=$userid AND eventid=$eventid");
+    if ($mysqli->affected_rows == 0) {
+        $mysqli->query("INSERT INTO responses (userid, eventid, response) VALUES ($userid, $eventid, $going)");
+    }
+
+    die();
+}
+
+$going = $mysqli->query("SELECT * FROM responses WHERE userid=$userid AND eventid=$eventid")->fetch_assoc()['response'];
 
 ?>
 
@@ -22,7 +41,6 @@ if (isset($_GET['eventid'])) {
 	<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
     <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
-    <link rel="stylesheet" type="text/css" href="styles/accordion.css" />
 
     <!-- bootstrap toggle -->
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
@@ -31,16 +49,28 @@ if (isset($_GET['eventid'])) {
 </head>
 
 <script type="text/javascript">
-$(document).ready(function() {
-  $('.collapse.in').prev('.panel-heading').addClass('active');
-  $('#accordion, #bs-collapse')
-    .on('show.bs.collapse', function(a) {
-      $(a.target).prev('.panel-heading').addClass('active');
-    })
-    .on('hide.bs.collapse', function(a) {
-      $(a.target).prev('.panel-heading').removeClass('active');
+    $(document).ready(function() {
+        $('.collapse.in').prev('.panel-heading').addClass('active');
+        $('#accordion, #bs-collapse')
+        .on('show.bs.collapse', function(a) {
+            $(a.target).prev('.panel-heading').addClass('active');
+        })
+        .on('hide.bs.collapse', function(a) {
+            $(a.target).prev('.panel-heading').removeClass('active');
+        });
+
+        // detect changes
+        $('#going').change(function() {
+
+            var checked = this.checked ? 1 : 0;
+            
+            $.ajax({
+                data: {going: checked},
+                type: "POST",
+                dataType: "text",
+            });
+        });
     });
-});
 </script>
 
 <body>
@@ -72,26 +102,33 @@ $(document).ready(function() {
         <h2> <?php echo $name; ?> </h2>
         <h4> <?php echo $starttime . " - " . $endtime; ?> </h4>
         <p> <?php echo $description; ?></p>
-        <form id="attendanceForm" method="POST" action="attendance-record.php">
-            <div class="checkbox">
-                <input type="hidden" name="sent" value="true">
-                Going? <input type="checkbox" value="true" name="going" data-toggle="toggle" data-on="Yes" data-off="No" onclick="$('#attendanceForm').submit();">
-            </div>
-        </form>
+        <div class="checkbox"> Going?
+            <?php if ($going) : ?>
+            <input type="checkbox" id="going" data-toggle="toggle" data-on="Yes" data-off="No" checked>
+            <?php else : ?>
+            <input type="checkbox" id="going" data-toggle="toggle" data-on="Yes" data-off="No">
+            <?php endif; ?>
+        </div>
     </div>
     <div class="event-header" data-toggle="collapse" data-target="#collapse1">Who's Going?</div>
         <div id="collapse1" class="collapse event-section">
             Users who have responded "yes":
             <ul>
-                <li>Jacob Mack</li>
-                <li>Evan Whiting</li>
-                <li>Michel Ge</li>
-                <li>Nathan Burlis</li>
+                <?php
+                    $responses = $mysqli->query("SELECT * FROM responses WHERE eventid=$eventid");
+                    while ($response = $responses->fetch_assoc()) {
+                        if ($response['response'] == 1) {
+                            $userid = $response['userid'];
+                            $name = $mysqli->query("SELECT * FROM roster WHERE id=$userid")->fetch_assoc()['name'];
+                            echo "<li>$name</li>";
+                        }
+                    }
+                ?>
             </ul>
         </div>
     <div class="event-header" data-toggle="collapse" data-target="#collapse2">Where At?</div>
         <div id="collapse2" class="collapse event-section"><?php echo $location; ?></div>
-    <div class="event-header" data-toggle="collapse" data-target="#collapse3">What to Bring?</div>
+    <div class="event-header" data-toggle="collapse" data-target="#collapse3">Notes</div>
         <div id="collapse3" class="collapse event-section"><?php echo $notes; ?></div>
 </div>
 </div>

@@ -7,8 +7,8 @@ function logOut() {
 			auth2 = gapi.auth2.getAuthInstance();
 			auth2.signOut().then(function() {
 		        $.ajax({
-			        type: "POST",
-			        url: "logout.php",
+			        type: "GET",
+			        url: "../logout.php",
 			        success: function() {
 			            window.location = "login.php";
 			        },

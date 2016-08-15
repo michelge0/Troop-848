@@ -1,6 +1,6 @@
 <?php
-session_start();
 
+require('authenticate.php');
 require('database-helper.php');
 ?>
 
@@ -30,56 +30,6 @@ require('database-helper.php');
     <!-- bootstrap toggle -->
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
-	<script type="text/javascript">
-		$(function() {
-			$('#eventStartTime').datetimepicker();
-			$('#eventEndTime').datetimepicker({
-				useCurrent: false
-			});
-			$('#eventStartTime').on("dp.change", function(e) {
-				$('#eventEndTime').data("DateTimePicker").minDate(e.date);
-			});
-			$('#eventEndTime').on("dp.change", function(e) {
-				$('#eventStartTime').data("DateTimePicker").maxDate(e.date);
-			});
-
-			$('#mainModal').on('show.bs.modal', function(e) {
-				var changeType = $(e.relatedTarget).data('change-type');
-
-				$('#myModalLabel').html(changeType + " Event");
-
-				// if editing user, then the event's existing info is filled in
-				if (changeType === "Edit") {
-	    			var eventData = $(e.relatedTarget).data('event-info');
-	    			$(e.currentTarget).find('input#eventName').val(eventData[0].name);
-	    			$(e.currentTarget).find('textarea#eventDescription').val(eventData[0].description);
-	    			$(e.currentTarget).find('input#eventStartTime').val(eventData[0].starttime);
-	    			$(e.currentTarget).find('input#eventEndTime').val(eventData[0].endtime);
-	    			$(e.currentTarget).find('input#eventLocation').val(eventData[0].location);
-	    			$(e.currentTarget).find('textarea#eventNotes').val(eventData[0].notes);
-
-	    			$("form#changeForm").attr('action', 'maintenance/update-event.php?type=edit&id=' + eventData[0].id);
-
-	    		// if creating a new user, defaults everything to blank
-				} else if (changeType === "Add") {
-	    			$(e.currentTarget).find('input#eventName').val("");
-	    			$(e.currentTarget).find('textarea#eventDescription').val("");
-	    			$(e.currentTarget).find('input#eventStartTime').val("");
-	    			$(e.currentTarget).find('input#eventEndTime').val("");
-	    			$(e.currentTarget).find('input#eventLocation').val("");
-	    			$(e.currentTarget).find('textarea#eventNotes').val("");
-
-	    			$("form#changeForm").attr('action', 'maintenance/update-event.php?type=add');
-				}
-			});
-
-			$('#deleteModal').on('show.bs.modal', function(e) {
-				var id = $(e.relatedTarget).data('id');
-				$('form#deleteForm').attr('action', 'maintenance/delete-data.php?table=events&id=' + id);
-			});
-		});
-	</script>
 </head>
 
 <body>
@@ -94,9 +44,13 @@ require('database-helper.php');
 		</div>
 		<div class="col-sm-3"></div>
 	</div>
-	<div class="row events-list">
+	<div class="row calendar-events-list">
 		<h2 style="margin: 50px"> Upcoming Events </h2>
+
+		<?php if ($_SESSION['permissions'] >= 1) : ?>
 		<button class="btn btn-default" style="margin-bottom: 15px" data-toggle="modal" data-target="#mainModal" data-change-type="Add">+</button>
+		<?php endif; ?>
+		
 		<div class="list-group">
 			<?php
 		    	$result = $mysqli->query("SELECT * FROM events")->fetch_all(MYSQLI_ASSOC);
@@ -108,20 +62,25 @@ require('database-helper.php');
 						$starttime = $row['starttime'];
 						$description = substr($row['description'], 0, 200) . " . . .";
 						$id = $row['id'];
-						echo "<h3 class=\"event-title\">$name</h3>";
-						echo "<h4 class=\"event-date\">$starttime</h4>";
+						echo "<h3 class=\"calendar-event-title\">$name</h3>";
+						echo "<h4 class=\"calendar-event-date\">$starttime</h4>";
 						echo "<p class=\"calendar-description\">$description</p>";
 						echo "<div class=\"calendar-link\"><a class=\"btn btn-default\" href=\"event.php?eventid=$id\"> More >> </a></div>";
 						echo "<br>";
-						echo "<button class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#mainModal\" data-change-type=\"Edit\" data-event-info=\"".htmlspecialchars(json_encode(array($row)), ENT_QUOTES, 'UTF-8')."\">Edit</button>";
-						echo "     ";
-						echo "<button class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#deleteModal\" data-id=\"$id\">Delete</button>";
+
+						if ($_SESSION['permissions'] >= 1) {
+							echo "<button class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#mainModal\" data-change-type=\"Edit\" data-event-info=\"".htmlspecialchars(json_encode(array($row)), ENT_QUOTES, 'UTF-8')."\">Edit</button>";
+							echo "     ";
+							echo "<button class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#deleteModal\" data-id=\"$id\">Delete</button>";
+						}
 						echo "</div>";
 					}
 				}
 		    ?>
 		</div>
 	</div>
+
+<?php if ($_SESSION['permissions'] >= 1) : ?>
 
 <!-- edit user modal -->
 <div class="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -198,10 +157,60 @@ require('database-helper.php');
   </div>
 </div>
 
+<script>
+	$(function() {
+		$('#eventStartTime').datetimepicker();
+		$('#eventEndTime').datetimepicker({
+			useCurrent: false
+		});
+		$('#eventStartTime').on("dp.change", function(e) {
+			$('#eventEndTime').data("DateTimePicker").minDate(e.date);
+		});
+		$('#eventEndTime').on("dp.change", function(e) {
+			$('#eventStartTime').data("DateTimePicker").maxDate(e.date);
+		});
+
+		$('#mainModal').on('show.bs.modal', function(e) {
+			var changeType = $(e.relatedTarget).data('change-type');
+
+			$('#myModalLabel').html(changeType + " Event");
+
+			// if editing user, then the event's existing info is filled in
+			if (changeType === "Edit") {
+    			var eventData = $(e.relatedTarget).data('event-info');
+    			$(e.currentTarget).find('input#eventName').val(eventData[0].name);
+    			$(e.currentTarget).find('textarea#eventDescription').val(eventData[0].description);
+    			$(e.currentTarget).find('input#eventStartTime').val(eventData[0].starttime);
+    			$(e.currentTarget).find('input#eventEndTime').val(eventData[0].endtime);
+    			$(e.currentTarget).find('input#eventLocation').val(eventData[0].location);
+    			$(e.currentTarget).find('textarea#eventNotes').val(eventData[0].notes);
+
+    			$("form#changeForm").attr('action', 'maintenance/update-event.php?type=edit&id=' + eventData[0].id);
+
+    		// if creating a new user, defaults everything to blank
+			} else if (changeType === "Add") {
+    			$(e.currentTarget).find('input#eventName').val("");
+    			$(e.currentTarget).find('textarea#eventDescription').val("");
+    			$(e.currentTarget).find('input#eventStartTime').val("");
+    			$(e.currentTarget).find('input#eventEndTime').val("");
+    			$(e.currentTarget).find('input#eventLocation').val("");
+    			$(e.currentTarget).find('textarea#eventNotes').val("");
+
+    			$("form#changeForm").attr('action', 'maintenance/update-event.php?type=add');
+			}
+		});
+
+		$('#deleteModal').on('show.bs.modal', function(e) {
+			var id = $(e.relatedTarget).data('id');
+			$('form#deleteForm').attr('action', 'maintenance/delete-data.php?table=events&id=' + id);
+		});
+	});
+</script>
+
+<?php endif; ?>
+
 <!-- end content -->
 </div>
-
-
 
 </body>
 </html>

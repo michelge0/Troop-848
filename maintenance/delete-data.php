@@ -22,7 +22,7 @@ if (isset($_POST['name'])) {
 	}	
 	
 	if ($table === "roster") {
-		header("Location: ../roster-admin.php");
+		header("Location: ../roster.php");
 	} else if ($table === "events") {
 		// TODO: SEND MASS EMAIL
 		header("Location: ../calendar.php");

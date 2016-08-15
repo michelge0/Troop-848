@@ -17,14 +17,14 @@ if (isset($_POST['title'])) {
 
 	if ($type == "edit") {
 		$id = $_GET['id'];
-		$statement = $mysqli->prepare("UPDATE `$blogname` SET title = ?, author = ?, date = ?, content = ? WHERE id=$id");
+		$statement = $mysqli->prepare("UPDATE `$blogname` SET title = ?, author = ?, `date` = ?, content = ? WHERE id=$id");
 		$statement->bind_param("ssss", $title, $author, $date, $content);
 		$statement->execute();
 
 		$message = "Edit successful!";
 
 	} else if ($type == "add") {
-		$statement = $mysqli->prepare("INSERT INTO `$blogname` (title, author, date, content) VALUES (?, ?, ?, ?)");
+		$statement = $mysqli->prepare("INSERT INTO `$blogname` (title, author, `date`, content) VALUES (?, ?, ?, ?)");
 		$statement->bind_param("ssss", $title, $author, $date, $content);
 		$statement->execute();
 

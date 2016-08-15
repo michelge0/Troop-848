@@ -1,6 +1,6 @@
 html {
-/*	background: url(../images/scouts.jpg) no-repeat center center fixed;
-	background-size: cover;*/
+	background: url(../images/scouts.jpg) no-repeat center center fixed;
+	background-size: cover;
 
 	min-height: 100%;
 }
@@ -12,6 +12,7 @@ body {
 }
 
 /* background slideshow */
+/* IN PROGRESS NOT COMPLETE */
 
 .slideshow {
 	position: absolute;
@@ -25,6 +26,12 @@ body {
 	width: 100%;
 	height: 100%;
 }
+
+
+
+/* END IN PROGRESS */
+
+
 
 .title, .footer {
 	position: absolute;

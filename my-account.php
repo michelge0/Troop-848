@@ -1,6 +1,21 @@
 <?php
-session_start();
+
 require('database-helper.php');
+require('authenticate.php');
+
+$_SESSION['email'] = 'strengthofthepen@gmail.com';
+$email = $_SESSION['email'];
+
+if (isset($_POST['column'])) {
+    $column = $_POST['column'];
+    $value = $_POST['value'];
+
+    $mysqli->query("UPDATE email_preferences SET $column=$value WHERE email='$email'");
+}
+
+
+$oncreate = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'")->fetch_assoc()['oncreate'];
+$ondelete = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'")->fetch_assoc()['ondelete'];
 
 ?>
 
@@ -19,6 +34,23 @@ require('database-helper.php');
     <!-- bootstrap toggle -->
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // detect changes
+            $(':checkbox').change(function() {
+
+                var id = this.getAttribute('id');
+                var checked = this.checked ? 1 : 0;
+                
+                $.ajax({
+                    data: {column: id, value: checked},
+                    type: "POST",
+                    dataType: "text",
+                });
+            });
+        }); 
+    </script>
 </head>
 
 <body>
@@ -27,7 +59,21 @@ require('database-helper.php');
 
 <div class="content">
     <div class="checkbox">
-        Email notifications: <input type="checkbox" value="true" name="email" data-toggle="toggle" data-on="Yes" data-off="No">
+        Email me when events are created:
+        <?php if ($oncreate) : ?>
+        <input type="checkbox" value="true" id="oncreate" data-toggle="toggle" data-on="Yes" data-off="No" checked>
+        <?php else : ?>
+        <input type="checkbox" value="true" id="oncreate" data-toggle="toggle" data-on="Yes" data-off="No">
+        <?php endif; ?>
+    </div>
+
+    <div class="checkbox" id="ondelete">
+        Email me when events are cancelled or rescheduled:
+        <?php if ($ondelete) : ?>
+        <input type="checkbox" value="true" id="ondelete" data-toggle="toggle" data-on="Yes" data-off="No" checked>
+        <?php else : ?>
+        <input type="checkbox" value="true" id="ondelete" data-toggle="toggle" data-on="Yes" data-off="No">
+        <?php endif; ?>
     </div>
 </div>
 </body>
