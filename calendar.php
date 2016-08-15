@@ -26,6 +26,8 @@ require('database-helper.php');
     <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
     <!-- datetime -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- bootstrap toggle -->
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">

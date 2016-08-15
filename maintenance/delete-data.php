@@ -20,7 +20,7 @@ if (isset($_POST['name'])) {
 		$statement->bind_param("i", $id);
 		$statement->execute();
 	} else {
-		die("Sorry, you didn't spell the name right.". $input_attempt . " expected: " . $expected_name. " table " . $table);
+		die("Sorry, you didn't spell the name right.");
 	}
 	
 	if ($table === "roster") {

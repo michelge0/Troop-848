@@ -41,6 +41,7 @@ $going = $mysqli->query("SELECT * FROM responses WHERE userid=$userid AND eventi
 	<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
     <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- bootstrap toggle -->
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
