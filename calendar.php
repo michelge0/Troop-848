@@ -175,9 +175,10 @@ require('database-helper.php');
 
 			$('#myModalLabel').html(changeType + " Event");
 
+
 			// if editing user, then the event's existing info is filled in
 			if (changeType === "Edit") {
-    			var eventData = $(e.relatedTarget).data('event-info');
+	    		var eventData = $(e.relatedTarget).data('event-info');
     			$(e.currentTarget).find('input#eventName').val(eventData[0].name);
     			$(e.currentTarget).find('textarea#eventDescription').val(eventData[0].description);
     			$(e.currentTarget).find('input#eventStartTime').val(eventData[0].starttime);

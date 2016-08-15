@@ -23,15 +23,21 @@ require('database-helper.php');
 
 <div class="content">
 
+    <?php if ($_SESSION['permissions'] >= 1) : ?>
+    <div class="row">
+        <button class="btn btn-default" data-toggle="modal" data-target="#newBlogModal">New Blog</button>
+    </div>
+    <?php endif; ?>
+
     <!-- main content  -->
 	<div class="col-sm-9">
 
         <!-- intro message  -->
-        <i style="color: rgb(150, 0, 0)"><strong>Welcome to the homepage. Here you can view the most recent blog posts and events. Admins: you can't modify anything here. To delete or edit a post, visit the blog that the post belongs to.</strong></i>
+        <i style="color: rgb(150, 0, 0)"><strong>Welcome to the homepage. Here you can view the most recent blog posts and events.</strong></i>
 
         <!-- posts  -->
         <?php
-            $blogs = $mysqli->query("SELECT * FROM categories")->fetch_all(MYSQLI_ASSOC);
+            $blogs = $mysqli->query("SELECT * FROM blogs")->fetch_all(MYSQLI_ASSOC);
 
             $allposts = [];
             for ($i = 0; $i < count($blogs); $i++) {
@@ -83,6 +89,42 @@ require('database-helper.php');
         </ul>
     </div>
 </div>
+
+<?php if($_SESSION['permissions'] >= 1) : ?>
+
+<div class="modal fade" id="newBlogModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">New Blog</h4>
+      </div>
+      <form id="newBlogForm" action="maintenance/new-blog.php" method="POST">
+          <div class="modal-body">
+            <div class="form-group">
+                <label>Blog Name:</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+            <div class="form-group">
+                <label>Blog Category:</label>
+                <select class="form-control" name="category">
+                        <option value="scouting">Scouting</option>
+                        <option value="adventures">Adventures</option>
+                </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-danger">
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<?php endif; ?>
 
 </body>
 </html>

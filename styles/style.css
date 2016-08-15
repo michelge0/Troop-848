@@ -147,9 +147,19 @@ ul.nav-bar {
 	font-size: 14pt;
 	line-height: 200%;
 }
+
 .content:after {
 	content: "";
 	display: block;
+}
+
+.blog-title {
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 36pt;
+	color: rgb(150, 0, 0);
+
+	margin-bottom: 75px;
 }
 
 .post figure {

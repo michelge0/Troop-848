@@ -6,8 +6,7 @@ require('database-helper.php');
 if (isset($_GET['blogid'])) {
     $blogid = $_GET['blogid'];
 } else {
-    // redirect to error page
-    die("Wrong id in query string.");
+    die("Blog not found . . .");
 }
 
 ?>
@@ -28,52 +27,55 @@ if (isset($_GET['blogid'])) {
 
 <body>
 
-<?php include('header.php') ?>
+<?php
+
+include('header.php');
+
+$blogname = $mysqli->query("SELECT * FROM blogs WHERE id=$blogid")->fetch_assoc()['blogname'] or header("Location: index.php");
+$blognameurl = urlencode($blogname);
+
+?>
 
 <div class="content">
-    <?php
-        $blogname = $mysqli->query("SELECT * FROM categories WHERE id=$blogid")->fetch_assoc()['blogname'] or header("Location: index.php");
-        $blognameurl = urlencode($blogname);
-    ?>
 
-    <?php if ($_SESSION['permissions'] >= 1) : ?>
+  <h1 class="blog-title"> <?php echo $blogname; ?> </h1>
 
-    <div class="row">
-        <button class="btn btn-default" data-toggle="modal" data-target="#mainModal" data-change-type="Add"
-            data-blogname=<?php echo "\"$blognameurl\"";?>>New Post</button>
-        <button class="btn btn-default" data-toggle="modal" data-target="#newBlogModal">New Blog</button>
-        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteBlogModal">Delete Blog</button>
-    </div>
-    <?php endif; ?>
+  <?php if ($_SESSION['permissions'] >= 1) : ?>
+
+  <div class="row">
+      <button class="btn btn-default" data-toggle="modal" data-target="#mainModal" data-change-type="Add"
+          data-blogname=<?php echo "\"$blognameurl\"";?>>New Post</button>
+      <button class="btn btn-default" data-toggle="modal" data-target="#newBlogModal">New Blog</button>
+      <button class="btn btn-danger" data-toggle="modal" data-target="#deleteBlogModal">Delete Blog</button>
+  </div>
+  <?php endif; ?>
 
 	<div class="col-sm-9">
-        <?php
-            $blogname = $mysqli->query("SELECT * FROM categories WHERE id=$blogid")->fetch_all(MYSQLI_ASSOC)[0]['blogname'];
+      <?php
+          $blogname = $mysqli->query("SELECT * FROM blogs WHERE id=$blogid")->fetch_all(MYSQLI_ASSOC)[0]['blogname'];
 
-            $query = "SELECT * FROM `$blogname`";
-            $result = $mysqli->query($query);
-            if ($result) {
-                while ($article = $result->fetch_assoc()) {
-                    $title = $article['title'];
-                    $date = $article['date'];
-                    $content = $article['content'];
-                    $author = $article['author'];
-                    echo "<div class=\"post\">";
-                    echo "<h2>$title</h2>";
-                    echo "<h4><i>posted on $date by $author</i></h4>";
-                    echo "<p>$content</p>";
-                    if ($_SESSION['permissions'] >= 1) {
-                        echo "<button class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#mainModal\" data-change-type=\"Edit\" data-post-info=\"".htmlspecialchars(json_encode(array($article)), ENT_QUOTES, 'UTF-8')."\" data-blogname=\"$blognameurl\">Edit Post</button>";
-                        echo "     ";
-                        echo "<button class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#deleteModal\" data-id=\"$id\" data-blogname=\"$blognameurl\">
-                            Delete Post</button>";
-                    }
-                    echo "</div>";
-                }
-            } else {
-                echo "<h2> No articles yet! </h2>";
-            }
-        ?>
+          $query = "SELECT * FROM `$blogname`";
+          $result = $mysqli->query($query);
+          if ($result) {
+              while ($article = $result->fetch_assoc()) {
+                  $title = $article['title'];
+                  $date = $article['date'];
+                  $content = $article['content'];
+                  $author = $article['author'];
+                  echo "<div class=\"post\">";
+                  echo "<h2>$title</h2>";
+                  echo "<h4><i>posted on $date by $author</i></h4>";
+                  echo "<p>$content</p>";
+                  if ($_SESSION['permissions'] >= 1) {
+                      echo "<button class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#mainModal\" data-change-type=\"Edit\" data-post-info=\"".htmlspecialchars(json_encode(array($article)), ENT_QUOTES, 'UTF-8')."\" data-blogname=\"$blognameurl\">Edit Post</button>";
+                      echo "     ";
+                      echo "<button class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#deleteModal\" data-id=\"$id\" data-blogname=\"$blognameurl\">
+                          Delete Post</button>";
+                  }
+                  echo "</div>";
+              }
+          }
+      ?>
     </div>
 	<div class="col-sm-3" id="sidebarScrollSpy">
         <ul class="nav" data-spy="affix" data-offset-top="160">
@@ -179,10 +181,6 @@ if (isset($_GET['blogid'])) {
                         <option value="adventures">Adventures</option>
                 </select>
             </div>
-            <input type="hidden" name="blogid" value= <?php
-                $blogid = $_GET['blogid'];
-                echo "\"$blogid\"";
-            ?> />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

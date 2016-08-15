@@ -12,10 +12,10 @@
 <li><a href="index.php">Home</a></li>
 <li><a href="roster.php">Roster</a></li>
 <li class="dropdown-link">
-	Scouting
+	<a href="blog.php">Scouting</a>
 	<div class="dropdown-content">
 	<?php
-		$result = $mysqli->query("SELECT * FROM categories WHERE category='scouting'")->fetch_all(MYSQLI_ASSOC);
+		$result = $mysqli->query("SELECT * FROM blogs WHERE category='scouting'")->fetch_all(MYSQLI_ASSOC);
 		if ($result) {
 			for ($i = 0; $i < count($result); $i++) {
 				$row = $result[$i];
@@ -32,7 +32,7 @@
 	Adventures
 	<div class="dropdown-content">
 	<?php
-		$result = $mysqli->query("SELECT * FROM categories WHERE category='adventures'")->fetch_all(MYSQLI_ASSOC);
+		$result = $mysqli->query("SELECT * FROM blogs WHERE category='adventures'")->fetch_all(MYSQLI_ASSOC);
 		if ($result) {
 			for ($i = 0; $i < count($result); $i++) {
 				$row = $result[$i];

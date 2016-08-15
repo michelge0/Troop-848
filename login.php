@@ -93,7 +93,7 @@
 <body>
 <div class="title">TROOP <strong>848</strong></div>
 <div class="footer">
-	<div class="description">For over 25 years, Troop 848 has been serving the Chesterfield, Missouri region. We have over 200 Eagle Scouts and are one kick-ass troop.</div>
+	<div class="description">For over 25 years, Troop 848 has been serving the Chesterfield, Missouri region. We have over 200 Eagle Scouts and are a great troop.</div>
 	<div id="my-signin2" class="button-secondary" data-redirecturi="http://localhost:9999"></div>
 	<div class="button-main">Join Us</div>
 </div>

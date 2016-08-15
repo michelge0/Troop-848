@@ -6,15 +6,15 @@ if (isset($_POST['name'])) {
 	$attempted_name = $_POST['name'];
 	$blogid = $_POST['blogid'];
 
-	$blogname = $mysqli->query("SELECT * FROM categories WHERE id=$blogid")->fetch_assoc()['blogname'];
+	$blogname = $mysqli->query("SELECT * FROM blogs WHERE id=$blogid")->fetch_assoc()['blogname'];
 	if ($blogname === $attempted_name) {
 
 		// delete table
 		$statement = $mysqli->prepare("DROP TABLE `$blogname`");
 		$statement->execute();
 
-		// remove record from categories
-		$mysqli->query("DELETE FROM categories WHERE id=$blogid");
+		// remove record from blogs
+		$mysqli->query("DELETE FROM blogs WHERE id=$blogid");
 
 		header("Location: ../index.php");
 		die();
