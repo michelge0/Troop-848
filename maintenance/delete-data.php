@@ -19,7 +19,9 @@ if (isset($_POST['name'])) {
 		$statement = $mysqli->prepare("DELETE FROM `$table` WHERE id=?");
 		$statement->bind_param("i", $id);
 		$statement->execute();
-	}	
+	} else {
+		die("Sorry, you didn't spell the name right.". $input_attempt . " expected: " . $expected_name. " table " . $table);
+	}
 	
 	if ($table === "roster") {
 		header("Location: ../roster.php");
@@ -28,8 +30,8 @@ if (isset($_POST['name'])) {
 		header("Location: ../calendar.php");
 	// for blog posts (table name varies) 
 	} else {
-		$blogid = $_POST['blogid'];
-		header("Location: ../blog-admin.php?blogid=$blogid");
+		$blogid = $_GET['id'];
+		header("Location: ../blog.php?blogid=$blogid");
 	}
 	
 	die();

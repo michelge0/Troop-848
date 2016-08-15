@@ -62,6 +62,7 @@ $blognameurl = urlencode($blogname);
                   $date = $article['date'];
                   $content = $article['content'];
                   $author = $article['author'];
+                  $id = $article['id'];
                   echo "<div class=\"post\">";
                   echo "<h2>$title</h2>";
                   echo "<h4><i>posted on $date by $author</i></h4>";
@@ -139,16 +140,12 @@ $blognameurl = urlencode($blogname);
         </button>
         <h4 class="modal-title" id="myModalLabel">Delete User</h4>
       </div>
-      <form id="deleteForm" action="maintenance/delete-post.php" method="POST">
+      <form id="deleteForm" action="maintenance/delete-data.php" method="POST">
           <div class="modal-body">
             <div class="form-group">
                 <p> You're about to delete this post. <strong>To proceed, type the post's title into the field below.</strong></p>
                 <input type="text" class="form-control" name="name">
             </div>
-            <input type="hidden" name="blogid" value= <?php
-                $blogid = $_GET['blogid'];
-                echo "\"$blogid\"";
-            ?> />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

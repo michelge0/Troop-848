@@ -24,7 +24,7 @@ if (isset($_POST['title'])) {
 		$message = "Edit successful!";
 
 	} else if ($type == "add") {
-		$statement = $mysqli->prepare("INSERT INTO `$blogname` (title, author, `date`, content) VALUES (?, ?, ?, ?, ?)");
+		$statement = $mysqli->prepare("INSERT INTO `$blogname` (title, author, `date`, content) VALUES (?, ?, ?, ?)");
 		$statement->bind_param("ssss", $title, $author, $date, $content);
 		$statement->execute();
 
