@@ -1,6 +1,0 @@
-{
-    "require": {
-        "mailgun/mailgun-php": "^2.1",
-        "php-http/guzzle6-adapter": "^1.1"
-    }
-}

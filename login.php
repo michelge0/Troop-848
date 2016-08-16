@@ -7,8 +7,8 @@
         $name = $_POST['name'];
         $email = $_POST['email'];
 
-        require('database-helper.php');
-        require('init-session.php');
+        require('helper/database-helper.php');
+        require('helper/init-session.php');
 
         $result = $mysqli->query("SELECT * FROM roster WHERE email='$email'");
         if ($result && $result->num_rows > 0) {
@@ -25,7 +25,7 @@
 
             echo "authorized";
         } else {
-            require('logout.php');
+            require('helper/logout.php');
         }
 
         die();

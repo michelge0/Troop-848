@@ -1,34 +1,19 @@
 <?php
 
-require('authenticate.php');
-require('database-helper.php');
+require('helper/authenticate.php');
+require('helper/database-helper.php');
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="google-signin-client_id" content="251137415595-uttj6cdrkgfahoc0hffe2je2gt29utbo.apps.googleusercontent.com">
-<title>Personal Website</title>
-	<!-- bootstrap -->
-    <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="bootstrap-3.3.6-dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+	<?php require('helper/imports.php'); ?>
+
     <!-- datetime -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" />
-    <!-- custom styles -->
-    <link rel="stylesheet" type="text/css" href="styles/style.css" />
-
-    <!-- jquery -->
-    <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
-    <!-- datetime -->
     <script src="scripts/moment.js"></script>
-    <!-- bootstrap -->
-    <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-    <!-- datetime -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-
     <!-- bootstrap toggle -->
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
