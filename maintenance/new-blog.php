@@ -1,6 +1,6 @@
 <?php
 
-include('../database-helper.php');
+include('../helper/database-helper.php');
 
 $message = "Oops, something went wrong.";
 
@@ -14,7 +14,7 @@ if (isset($_POST['name'])) {
 		`title` tinytext,
 		`date` tinytext,
 		`content` mediumtext,
-		`imageid` int(11) DEFAULT NULL,
+		`image` tinytext DEFAULT NULL,
 		`author` tinytext
 		);") or die("Sorry, there was an error and the blog wasn't created. Maybe the name you tried already exists, or is a reserved keyword. (Try naming the blog something else.)");
 	$statement->execute();

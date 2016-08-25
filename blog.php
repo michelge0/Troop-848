@@ -54,10 +54,15 @@ $blognameurl = urlencode($blogname);
                   $date = $article['date'];
                   $content = $article['content'];
                   $author = $article['author'];
+                  $image = $article['image'];
                   $id = $article['id'];
                   echo "<div class=\"post\">";
                   echo "<h2>$title</h2>";
                   echo "<h4><i>posted on $date by $author</i></h4>";
+                  if ($image) {
+                    $image = "images/blogs/" . $image;
+                    echo "<img src='$image'>";
+                  }
                   echo "<p>$content</p>";
                   if ($_SESSION['permissions'] >= 1) {
                       echo "<button class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#mainModal\" data-change-type=\"Edit\" data-post-info=\"".htmlspecialchars(json_encode(array($article)), ENT_QUOTES, 'UTF-8')."\" data-blogname=\"$blognameurl\">Edit Post</button>";
@@ -90,7 +95,7 @@ $blognameurl = urlencode($blogname);
         </button>
         <h4 class="modal-title" id="myModalLabel"></h4>
       </div>
-      <form id="changeForm" action="maintenance/update-blog.php" method="POST">
+      <form id="changeForm" action="maintenance/update-post.php" enctype="multipart/form-data" method="POST">
           <div class="modal-body">
             <div class="form-group">
                 <label for="postTitle">Title:</label>
@@ -99,6 +104,10 @@ $blognameurl = urlencode($blogname);
             <div class="form-group">
                 <label for="postContent">Write Post Here:</label>
                 <textarea class="form-control" id="postContent" rows="20" name="content"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Upload image (optional):</label>
+              <input type="file" name="imageUpload" id="imageUpload">
             </div>
             <input type="hidden" name="date" value= <?php
                 date_default_timezone_set('America/Chicago');

@@ -16,7 +16,7 @@ if (isset($_POST['column'])) {
 
 $oncreate = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'")->fetch_assoc()['oncreate'];
 $ondelete = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'")->fetch_assoc()['ondelete'];
-
+$onedit = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'")->fetch_assoc()['onedit'];
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -61,12 +61,21 @@ $ondelete = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'
         <?php endif; ?>
     </div>
 
-    <div class="checkbox" id="ondelete">
-        Email me when events are cancelled or rescheduled:
+    <div class="checkbox">
+        Email me when events are cancelled:
         <?php if ($ondelete) : ?>
         <input type="checkbox" value="true" id="ondelete" data-toggle="toggle" data-on="Yes" data-off="No" checked>
         <?php else : ?>
         <input type="checkbox" value="true" id="ondelete" data-toggle="toggle" data-on="Yes" data-off="No">
+        <?php endif; ?>
+    </div>
+
+    <div class="checkbox">
+        Email me when events are rescheduled/changed:
+        <?php if ($onedit) : ?>
+        <input type="checkbox" value="true" id="onedit" data-toggle="toggle" data-on="Yes" data-off="No" checked>
+        <?php else : ?>
+        <input type="checkbox" value="true" id="onedit" data-toggle="toggle" data-on="Yes" data-off="No">
         <?php endif; ?>
     </div>
 </div>

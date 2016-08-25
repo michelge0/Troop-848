@@ -1,6 +1,7 @@
 <?php
 
-include('../database-helper.php');
+include('../helper/database-helper.php');
+include('../helper/mail.php');
 
 $message = "Oops, something went wrong. Did you spell the user's name right?";
 
@@ -23,11 +24,21 @@ if (isset($_POST['name'])) {
 		die("Sorry, you didn't spell the name right.");
 	}
 	
+	// for roster
 	if ($table === "roster") {
 		header("Location: ../roster.php");
+
+	// for events
 	} else if ($table === "events") {
-		// TODO: SEND MASS EMAIL
+		$name = $input_attempt;
+		$to = get_event_emails('ondelete');
+		$subject = "Event Cancelled: $name";
+		$text = "This is an automatic message letting you know that $name has just been cancelled.";
+		$html = "<p>$text</p>";
+		send_mail($to, $subject, $text, $html);
+
 		header("Location: ../calendar.php");
+
 	// for blog posts (table name varies) 
 	} else {
 		$blogid = $_GET['id'];

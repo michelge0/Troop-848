@@ -1,6 +1,6 @@
 <?php
 
-include('../database-helper.php');
+include('../helper/database-helper.php');
 
 $message = "Oops, something went wrong.";
 

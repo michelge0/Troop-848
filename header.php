@@ -12,7 +12,7 @@
 <li><a href="index.php">Home</a></li>
 <li><a href="roster.php">Roster</a></li>
 <li class="dropdown-link">
-	<a href="blog.php">Scouting</a>
+	Scouting
 	<div class="dropdown-content">
 	<?php
 		$result = $mysqli->query("SELECT * FROM blogs WHERE category='scouting'")->fetch_all(MYSQLI_ASSOC);

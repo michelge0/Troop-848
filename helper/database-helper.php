@@ -18,20 +18,20 @@ $mysqli = new mysqli($db_server, $db_user, $db_pwd, $db_name);
 // 	return ($mysqli = new mysqli($db_server, $db_user, $db_pwd, $db_name));
 // }
 
-function sendMassEmail($subject, $message, $mysqli) {
-	$headers = 'From: admin@troop848.com' . "\r\n" .
-				'Reply-To: strengthofthepen@gmail.com';
+// function sendMassEmail($subject, $message, $mysqli) {
+// 	$headers = 'From: admin@troop848.com' . "\r\n" .
+// 				'Reply-To: strengthofthepen@gmail.com';
 
-	$to = "";
-	$emails = $mysqli->query("SELECT email FROM roster")->fetch_all(MYSQLI_ASSOC);
-	if ($emails) {
-		for ($i = 0; $i < count($emails); $i++) {
-			$email = $emails[$i]['email'];
-			$to .= $email . ", ";
-		}
-	}
+// 	$to = "";
+// 	$emails = $mysqli->query("SELECT email FROM roster")->fetch_all(MYSQLI_ASSOC);
+// 	if ($emails) {
+// 		for ($i = 0; $i < count($emails); $i++) {
+// 			$email = $emails[$i]['email'];
+// 			$to .= $email . ", ";
+// 		}
+// 	}
 
-	mail($to, $subject, $message, $headers);
-}
+// 	mail($to, $subject, $message, $headers);
+// }
 
 ?>

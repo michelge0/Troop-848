@@ -8,8 +8,8 @@ function logOut() {
 			auth2.signOut().then(function() {
 		        $.ajax({
 			        type: "GET",
-			        url: "../logout.php",
-			        success: function() {
+			        url: "../helper/logout.php",
+			        success: function(msg) {
 			            window.location = "login.php";
 			        },
 			        error: function() {
