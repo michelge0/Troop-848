@@ -7,7 +7,7 @@ function send_mail($to, $subject, $text, $html) {
 	$sendgrid = new SendGrid('troop848', 'fabellabuddy20');
 	$email = new SendGrid\Email();
 
-	$html .= "<p>This email was sent from the Troop 848 website. You can visit it <a href='troop848.herokuapp.com'>here</a>.</p>";
+	$html .= "<p>This email was sent from the Troop 848 website. You can visit it <a href='troop-848.herokuapp.com'>here</a>.</p>";
 
 	$email->addTo($to)
 	    ->setFrom('do-not-reply@troop848.com')
