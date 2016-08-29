@@ -27,7 +27,7 @@
 
             echo "authorized";
         } else {
-            require('../helper/logout.php');
+            require('helper/logout.php');
         }
 
         die();
@@ -75,7 +75,7 @@
                 }
             },
             error: function() {
-                alert("AJAX error...");
+                alert("There was an error in the code. If this keeps happening, please report it to the webmaster.");
             }
         });
     }
