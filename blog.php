@@ -54,15 +54,17 @@ $blognameurl = urlencode($blogname);
                   $date = $article['date'];
                   $content = $article['content'];
                   $author = $article['author'];
-                  $image = $article['image'];
                   $id = $article['id'];
                   echo "<div class=\"post\">";
                   echo "<h2>$title</h2>";
                   echo "<h4><i>posted on $date by $author</i></h4>";
-                  if ($image) {
-                    $image = "images/blogs/" . $image;
-                    echo "<img src='$image'>";
-                  }
+
+                  // $image = $article['image'];
+                  // if ($image) {
+                  //   $image = "images/blogs/" . $image;
+                  //   echo "<img src='$image'>";
+                  // }
+                  
                   echo "<p>$content</p>";
                   if ($_SESSION['permissions'] >= 1) {
                       echo "<button class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#mainModal\" data-change-type=\"Edit\" data-post-info=\"".htmlspecialchars(json_encode(array($article)), ENT_QUOTES, 'UTF-8')."\" data-blogname=\"$blognameurl\">Edit Post</button>";
@@ -74,13 +76,6 @@ $blognameurl = urlencode($blogname);
               }
           }
       ?>
-    </div>
-	<div class="col-sm-3" id="sidebarScrollSpy">
-        <ul class="nav" data-spy="affix" data-offset-top="160">
-            <!-- <li> <a href="#"> Test </a></li>
-            <li> <a href="#"> test 2 </a></li>  -->
-            Navbar TODO
-        </ul>
     </div>
 </div>
 
@@ -105,10 +100,10 @@ $blognameurl = urlencode($blogname);
                 <label for="postContent">Write Post Here:</label>
                 <textarea class="form-control" id="postContent" rows="20" name="content"></textarea>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label>Upload image (optional):</label>
               <input type="file" name="imageUpload" id="imageUpload">
-            </div>
+            </div> -->
             <input type="hidden" name="date" value= <?php
                 date_default_timezone_set('America/Chicago');
                 $date = date('m/d/Y h:i a');
@@ -139,7 +134,7 @@ $blognameurl = urlencode($blogname);
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel">Delete User</h4>
+        <h4 class="modal-title" id="myModalLabel">Delete Post</h4>
       </div>
       <form id="deleteForm" action="maintenance/delete-data.php" method="POST">
           <div class="modal-body">
@@ -147,6 +142,10 @@ $blognameurl = urlencode($blogname);
                 <p> You're about to delete this post. <strong>To proceed, type the post's title into the field below.</strong></p>
                 <input type="text" class="form-control" name="name">
             </div>
+            <input type="hidden" name="blogid" value= <?php
+                $blogid = $_GET['blogid'];
+                echo "\"$blogid\"";
+            ?> />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

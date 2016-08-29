@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 require 'database-helper.php';
 
 function send_mail($to, $subject, $text, $html) {
-	$sendgrid = new SendGrid('nobody', 'loathing2627');
+	$sendgrid = new SendGrid('troop848', 'fabellabuddy20');
 	$email = new SendGrid\Email();
 	$email->addTo($to)
 	    ->setFrom('admin@troop848.com')

@@ -26,7 +26,7 @@ require('helper/database-helper.php');
 	<div class="col-sm-9">
 
         <!-- intro message  -->
-        <i style="color: rgb(150, 0, 0)"><strong>Welcome to the homepage. Here you can view the most recent blog posts and events.</strong></i>
+        <i style="color: rgb(150, 0, 0)"><strong>Welcome to the homepage. Here you can view the most recent blog posts.</strong></i>
 
         <!-- posts  -->
         <?php

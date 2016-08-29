@@ -21,7 +21,7 @@ if (isset($_POST['name'])) {
 
 		$to = get_admin_emails();
 		$subject = "Blog Deleted: " . $blogname;
-		$text = "This is an automatic message letting you know that " $blogname " has just been deleted. \n
+		$text = "This is an automatic message letting you know that $blogname has just been deleted. \n
 				All of its posts have been deleted as well, but a record of them is pasted below. \n" . $post_text;
 		$html = "<p>" . $text . "</p>";
 		send_mail($to, $subject, $text, $html);

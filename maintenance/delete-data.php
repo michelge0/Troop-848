@@ -1,7 +1,7 @@
 <?php
 
-include('../helper/database-helper.php');
-include('../helper/mail.php');
+require('../helper/database-helper.php');
+require('../helper/mail.php');
 
 $message = "Oops, something went wrong. Did you spell the user's name right?";
 
@@ -41,8 +41,13 @@ if (isset($_POST['name'])) {
 
 	// for blog posts (table name varies) 
 	} else {
-		$blogid = $_GET['id'];
-		header("Location: ../blog.php?blogid=$blogid");
+		require("file-upload-backend.php");
+
+		$image_name = $expected_row['image'];
+		delete_file($image_name);		
+
+		$blogid = $_POST['blogid'];
+		// header("Location: ../blog.php?blogid=$blogid");
 	}
 	
 	die();
