@@ -2,11 +2,10 @@
 
 include('../helper/database-helper.php');
 
-$message = "Oops, something went wrong.";
-
 if (isset($_POST['name'])) {
 	$name = $_POST['name'];
 	$email = $_POST['email'];
+	$login_email = $_POST['loginEmail'];
 	$address = $_POST['address'];
 	$phone = $_POST['phone'];
 	$patrol = $_POST['patrol'];
@@ -16,25 +15,26 @@ if (isset($_POST['name'])) {
 
 	if ($type == "edit") {
 		$id = $_GET['id'];
-		$statement = $mysqli->prepare("UPDATE roster SET name = ?, email = ?, address = ?, phone = ?, patrol = ?, permissions = ? WHERE id=$id");
-		$statement->bind_param("ssssss", $name, $email, $address, $phone, $patrol, $permissions);
+		$statement = $mysqli->prepare("UPDATE roster SET name = ?, email = ?, login_email = ?, address = ?, phone = ?, patrol = ?, permissions = ? WHERE id=$id");
+		$statement->bind_param("sssssss", $name, $email, $login_email, $address, $phone, $patrol, $permissions);
 		$statement->execute();
-
-		$message = "Edit successful!";
 
 	} else if ($type == "add") {
-		$statement = $mysqli->prepare("INSERT INTO roster (name, email, address, phone, patrol, permissions) VALUES (?, ?, ?, ?, ?, ?)");
-		$statement->bind_param("ssssss", $name, $email, $address, $phone, $patrol, $permissions);
+		$statement = $mysqli->prepare("INSERT INTO roster (name, email, login_email, address, phone, patrol, permissions) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$statement->bind_param("sssssss", $name, $email, $login_email, $address, $phone, $patrol, $permissions);
 		$statement->execute();
 
-		$message = "Successfully added " . $name . "!";
+		$statement = $mysqli->prepare("INSERT INTO email_preferences (email) VALUES (?)");
+		$statement->bind_param("s", $email);
+		$statement->execute();
+
 	}
 
 	header("Location: ../roster.php");
 	die();
 
 } else {
-	echo $message;
+	echo "Error of some kind.";
 }
 
 ?>

@@ -3,7 +3,8 @@
 require('helper/database-helper.php');
 require('helper/authenticate.php');
 
-$_SESSION['email'] = 'strengthofthepen@gmail.com';
+// EMAIL PREFERENCES
+
 $email = $_SESSION['email'];
 
 if (isset($_POST['column'])) {
@@ -17,6 +18,22 @@ if (isset($_POST['column'])) {
 $oncreate = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'")->fetch_assoc()['oncreate'];
 $ondelete = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'")->fetch_assoc()['ondelete'];
 $onedit = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'")->fetch_assoc()['onedit'];
+
+// SENDING EMAILS
+
+if (isset($_POST['sendMail'])) {
+    require('helper/mail.php');
+
+    $to = "";
+    if ($_POST['sendMail'] === "patrol") $to = get_patrol_emails($email);
+    else if ($_POST['sendMail'] === "troop") $to = get_all_emails($email);
+
+    $subject = $_POST['subject'];
+    $text = $_POST['message'];
+    $html = "<p>$text</p>";
+    send_mail($to, $subject, $text, $html);
+}
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -78,6 +95,42 @@ $onedit = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'")
         <input type="checkbox" value="true" id="onedit" data-toggle="toggle" data-on="Yes" data-off="No">
         <?php endif; ?>
     </div>
+
+    <div class="dashboard-email">
+        <h3> Email My Patrol </h3>
+        <form method="POST">
+            <input type="hidden" name="sendMail" value="patrol">
+            <div class="form-group">
+                <label>Subject: </label>
+                <input type="text" class="form-control" name="subject">
+            </div>
+            <div class="form-group">
+                <label>Message: </label>
+                <textarea class="form-control" rows="10" name="message"></textarea>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Send">
+        </form>
+    </div>
+
+    <!-- Editors / Admins only -->
+    <?php if ($_SESSION["permissions"] >= 1) : ?>
+    <div class="dashboard-email">
+        <h3> Email Entire Troop </h3>
+        <form method="POST">
+            <input type="hidden" name="sendMail" value="troop">
+            <div class="form-group">
+                <label>Subject: </label>
+                <input type="text" class="form-control" name="subject">
+            </div>
+            <div class="form-group">
+                <label>Message: </label>
+                <textarea class="form-control" rows="10" name="message"></textarea>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Send">
+        </form>
+    </div>
+    <?php endif; ?>
+
 </div>
 </body>
 </html>

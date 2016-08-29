@@ -23,7 +23,7 @@ require('helper/database-helper.php');
     <?php endif; ?>
 
     <!-- main content  -->
-	<div class="col-sm-9">
+	<div>
 
         <!-- intro message  -->
         <i style="color: rgb(150, 0, 0)"><strong>Welcome to the homepage. Here you can view the most recent blog posts.</strong></i>
@@ -71,15 +71,6 @@ require('helper/database-helper.php');
                 echo "</div>";
             }
         ?>
-    </div>
-
-    <!-- navbar  -->
-	<div class="col-sm-3" id="sidebarScrollSpy">
-        <ul class="nav" data-spy="affix" data-offset-top="160">
-            <!-- <li> <a href="#"> Test </a></li>
-            <li> <a href="#"> test 2 </a></li>  -->
-            Navbar TODO
-        </ul>
     </div>
 </div>
 

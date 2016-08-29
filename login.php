@@ -10,13 +10,15 @@
         require('helper/database-helper.php');
         require('helper/init-session.php');
 
-        $result = $mysqli->query("SELECT * FROM roster WHERE email='$email'");
+        $result = $mysqli->query("SELECT * FROM roster WHERE login_email='$email'");
         if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
             $_SESSION["signedIn"] = true;
             $_SESSION["name"] = $name;
-            $_SESSION["email"] = $email;
+            $_SESSION["email"] = $row['email'];
 
-            $permission_string = $result->fetch_all(MYSQLI_ASSOC)[0]['permissions'];
+            $permission_string = $row['permissions'];
             switch ($permission_string) {
                 case "Editor": $_SESSION["permissions"] = 1; break;
                 case "Admin": $_SESSION["permissions"] = 2; break;
@@ -25,7 +27,7 @@
 
             echo "authorized";
         } else {
-            require('helper/logout.php');
+            require('../helper/logout.php');
         }
 
         die();
@@ -37,7 +39,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="google-signin-client_id" content="251137415595-uttj6cdrkgfahoc0hffe2je2gt29utbo.apps.googleusercontent.com">
-<title>Personal Website</title>
+<title>Troop 848</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
 
     <script src="scripts/logout.js"></script>

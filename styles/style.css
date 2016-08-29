@@ -139,6 +139,7 @@ ul.nav-bar {
 
 .content {
 	margin-top: 50px;
+	padding-bottom: 50px;
 
 	margin-left: auto;
 	margin-right: auto;
@@ -360,4 +361,22 @@ hr {
 .event-section {
 	padding-left: 15px;
 	text-align: left;
+}
+
+/** dashboard **/
+
+.dashboard-email {
+	margin-top: 65px;
+	width: 30%;
+}
+
+.dashboard-email h3 {
+	color: rgb(150, 0, 0);
+}
+
+/** roster **/
+
+.roster-patrols {
+	margin-top: 100px;
+	width: 40%;
 }

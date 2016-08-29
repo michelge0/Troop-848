@@ -61,7 +61,37 @@
 
 <?php if ($_SESSION['permissions'] === 2) : ?>
 
-<button class="btn btn-default" data-toggle="modal" data-target="#mainModal" data-change-type="Add">+</button>
+<button class="btn btn-default" data-toggle="modal" data-target="#mainModal" data-change-type="Add">Add Member</button>
+
+<div class="table-responsive table-hover roster-patrols">
+  <table class="table">
+    <thead>
+    	<tr>
+	        <th>Patrols</th>
+    	</tr>
+    </thead>
+    <tbody>
+    <?php
+    	$result = $mysqli->query("SELECT * FROM patrols")->fetch_all(MYSQLI_ASSOC);
+		if ($result) {
+			for ($i = 0; $i < count($result); $i++) {
+				echo "<tr>";
+				$patrol = $result[$i]['name'];
+				$id = $result[$i]['id'];
+				echo "<td>$patrol</td>";
+				echo "<td><button class='btn btn-default' data-toggle='modal' data-target='#patrolModal' data-change-type='Edit' data-name='$patrol' data-id='$id'>Edit Patrol</button>";
+				echo "     ";
+				echo "<button class='btn btn-danger' data-toggle='modal' data-target='#deletePatrolModal' data-id='$id'>Delete Patrol</button></td>";
+			}
+		}
+    ?>
+    </tbody>
+  </table>
+</div>
+
+<button class="btn btn-default" data-toggle="modal" data-target="#patrolModal" data-change-type="Add">Add Patrol</button>
+
+</div>
 
 <!-- edit user modal -->
 <div class="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -84,6 +114,10 @@
 	    		<input type="text" class="form-control" id="userEmail" name="email">
 	    	</div>
 	    	<div class="form-group">
+	    		<label for="userLoginEmail">Login Email (must be Gmail)</label>
+	    		<input type="text" class="form-control" id="userLoginEmail" name="loginEmail">
+	    	</div>
+	    	<div class="form-group">
 	    		<label for="userEmail">Address:</label>
 	    		<input type="text" class="form-control" id="userAddress" name="address">
 	    	</div>
@@ -99,7 +133,6 @@
 						if ($result) {
 							for ($i = 0; $i < count($result); $i++) {
 								$name = $result[$i]['name'];
-
 								echo "<option value='$name'>$name</option>";
 							}
 						}
@@ -124,6 +157,7 @@
   </div>
 </div>
 
+<!-- delete user modal  -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -149,6 +183,58 @@
   </div>
 </div>
 
+<!-- delete patrol modal -->
+<div class="modal fade" id="deletePatrolModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Delete Patrol</h4>
+      </div>
+      <form id="deletePatrolForm" action="maintenance/delete-patrol.php" method="POST">
+	      <div class="modal-body">
+	    	<div class="form-group">
+	    		<p>You're about to delete this patrol. <strong>To proceed, type the patrol's name into the field below.</strong></p>
+	    		<input type="text" class="form-control" name="name">
+	    	</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <input type="submit" class="btn btn-danger">
+	      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- update patrol modal  -->
+<div class="modal fade" id="patrolModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="patrolModalTitle"></h4>
+      </div>
+      <form id="patrolForm" action="maintenance/update-patrol.php" method="POST">
+	      <div class="modal-body">
+	    	<div class="form-group">
+	    		<label>Patrol Name: </label>
+	    		<input type="text" id="patrolName" class="form-control" name="name">
+	    	</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <input type="submit" class="btn btn-primary">
+	      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
 	$(document).ready(function() {
 		$('#mainModal').on('show.bs.modal', function(e) {
@@ -161,6 +247,7 @@
     			var userData = $(e.relatedTarget).data('user-info');
     			$(e.currentTarget).find('input#userName').val(userData[0].name);
     			$(e.currentTarget).find('input#userEmail').val(userData[0].email);
+    			$(e.currentTarget).find('input#userLoginEmail').val(userData[0].login_email);
     			$(e.currentTarget).find('input#userPhone').val(userData[0].phone);
     			$(e.currentTarget).find('input#userAddress').val(userData[0].address);
     			$("#userPatrol option[value=\'" + userData[0].patrol + "\']").attr('selected', 'selected');
@@ -172,6 +259,7 @@
 			} else if (changeType === "Add") {
     			$(e.currentTarget).find('input#userName').val("");
     			$(e.currentTarget).find('input#userEmail').val("");
+    			$(e.currentTarget).find('input#userLoginEmail').val("");
     			$(e.currentTarget).find('input#userPhone').val("");
     			$(e.currentTarget).find('input#userAddress').val("");
     			$("#userPatrol")[0].selectedIndex = -1;
@@ -179,6 +267,31 @@
 
     			$("form#changeForm").attr('action', 'maintenance/update-roster.php?type=add');
 			}
+		});
+
+		$('#patrolModal').on('show.bs.modal', function(e) {
+			var changeType = $(e.relatedTarget).data('change-type');
+
+			$('#patrolModalTitle').html(changeType + " User");
+
+			// if editing patrol, then the user's existing info is filled in
+			if (changeType === "Edit") {
+				var name = $(e.relatedTarget).data('name');
+				var id = $(e.relatedTarget).data('id');
+
+    			$(e.currentTarget).find('input#patrolName').val(name);
+    			$("form#patrolForm").attr('action', 'maintenance/update-patrol.php?type=edit&id=' + id);
+
+    		// if creating a new patrol, defaults everything to blank
+			} else if (changeType === "Add") {
+    			$(e.currentTarget).find('input#patrolName').val("");
+    			$("form#patrolForm").attr('action', 'maintenance/update-patrol.php?type=add');
+			}
+		});
+
+		$('#deletePatrolModal').on('show.bs.modal', function(e) {
+			var id = $(e.relatedTarget).data('id');
+			$('form#deletePatrolForm').attr('action', 'maintenance/delete-patrol.php?id=' + id);
 		});
 
 		$('#deleteModal').on('show.bs.modal', function(e) {
@@ -190,6 +303,5 @@
 
 <?php endif; ?>
 
-</div>
 </body>
 </html>

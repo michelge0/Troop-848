@@ -3,7 +3,7 @@
 <header class="header"> <a href="index.php">TROOP <strong>848</strong></a>
 	<div class="panel">
 		<button onclick="logOut();"> sign out </button>
-		<button onclick="window.location = 'my-account.php';""> my account </button>
+		<button onclick="window.location = 'dashboard.php';""> dashboard </button>
 		<p> signed in as <?php echo $_SESSION['name']?> </p>
 	</div>
 </header>

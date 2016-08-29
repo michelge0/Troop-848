@@ -42,7 +42,7 @@ $blognameurl = urlencode($blogname);
   </div>
   <?php endif; ?>
 
-	<div class="col-sm-9">
+	<div>
       <?php
           $blogname = $mysqli->query("SELECT * FROM blogs WHERE id=$blogid")->fetch_all(MYSQLI_ASSOC)[0]['blogname'];
 
