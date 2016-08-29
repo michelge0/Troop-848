@@ -30,6 +30,10 @@
     <?php
     	$result = $mysqli->query("SELECT * FROM roster")->fetch_all(MYSQLI_ASSOC);
 			if ($result) {
+				usort($result, function($a, $b) {
+				    return strcmp($a['name'], $b['name']);
+				});
+
 				for ($i = 0; $i < count($result); $i++) {
 					echo "<tr>";
 					$row = $result[$i];

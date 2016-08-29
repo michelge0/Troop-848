@@ -10,9 +10,7 @@ if (isset($_GET['eventid'])) {
 }
 
 $name = $_SESSION['name'];
-$email = $_SESSION['email'];
-
-$userid = $mysqli->query("SELECT * FROM roster WHERE name='$name' AND email='$email'")->fetch_assoc()['id'];
+$userid = $_SESSION['id'];
 
 if (isset($_POST['going'])) {
     $going = $_POST['going'];

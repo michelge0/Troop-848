@@ -17,6 +17,7 @@
             $_SESSION["signedIn"] = true;
             $_SESSION["name"] = $name;
             $_SESSION["email"] = $row['email'];
+            $_SESSION["id"] = $row['id'];
 
             $permission_string = $row['permissions'];
             switch ($permission_string) {
