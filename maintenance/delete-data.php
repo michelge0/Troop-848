@@ -41,13 +41,13 @@ if (isset($_POST['name'])) {
 
 	// for blog posts (table name varies) 
 	} else {
-		require("file-upload-backend.php");
+		// require("file-upload-backend.php");
 
-		$image_name = $expected_row['image'];
-		delete_file($image_name);		
+		// $image_name = $expected_row['image'];
+		// delete_file($image_name);		
 
 		$blogid = $_POST['blogid'];
-		// header("Location: ../blog.php?blogid=$blogid");
+		header("Location: ../blog.php?blogid=$blogid");
 	}
 	
 	die();
