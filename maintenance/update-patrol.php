@@ -2,7 +2,7 @@
 include('../helper/database-helper.php');
 
 if (isset($_POST['name'])) {
-	$name = $_POST['name'];
+	$name = trim($_POST['name']);
 	$type = $_GET['type'];
 
 	if ($type == "edit") {

@@ -4,7 +4,7 @@ require('../helper/database-helper.php');
 // require('file-upload-backend.php');
 
 if (isset($_POST['title'])) {
-	$title = $_POST['title'];
+	$title = trim($_POST['title']);
 	$author = $_POST['author'];
 	$date = $_POST['date'];
 	$content = $_POST['content'];

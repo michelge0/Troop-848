@@ -4,7 +4,7 @@ include('../helper/database-helper.php');
 include('../helper/mail.php');
 
 if (isset($_POST['name'])) {
-	$name = $_POST['name'];
+	$name = trim($_POST['name']);
 	$description = $_POST['description'];
 	$location = $_POST['location'];
 	$starttime = $_POST['starttime'];

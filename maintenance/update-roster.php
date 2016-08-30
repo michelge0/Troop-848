@@ -3,7 +3,7 @@
 include('../helper/database-helper.php');
 
 if (isset($_POST['name'])) {
-	$name = $_POST['name'];
+	$name = trim($_POST['name']);
 	$email = $_POST['email'];
 	$login_email = $_POST['loginEmail'];
 	$address = $_POST['address'];
