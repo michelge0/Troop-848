@@ -31,7 +31,7 @@
     	$result = $mysqli->query("SELECT * FROM roster")->fetch_all(MYSQLI_ASSOC);
 			if ($result) {
 				usort($result, function($a, $b) {
-				    return strcmp($a['name'], $b['name']);
+				    return strcmp($a['patrol'], $b['patrol']) == 0 ? strcmp($a['name'], $b['name']) : strcmp($a['patrol'], $b['patrol']);
 				});
 
 				for ($i = 0; $i < count($result); $i++) {
