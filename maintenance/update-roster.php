@@ -24,13 +24,14 @@ if (isset($_POST['name'])) {
 		$statement->bind_param("sssssss", $name, $email, $login_email, $address, $phone, $patrol, $permissions);
 		$statement->execute();
 
-		$statement = $mysqli->prepare("INSERT INTO email_preferences (email) VALUES (?)");
-		$statement->bind_param("s", $email);
-		$statement->execute();
+		$check = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'");
+		if ($check && mysql_num_rows($check) > 0) {
+			$statement = $mysqli->query("INSERT INTO email_preferences (email) VALUES ('$email')");
+		}
 
 	}
 
-	header("Location: ../roster.php");
+	//header("Location: ../roster.php");
 	die();
 
 } else {

@@ -14,7 +14,12 @@ if (isset($_POST['name'])) {
 	$statement->bind_param("i", $id);
 	$statement->execute();
 	$expected_row = $statement->get_result()->fetch_assoc();
-	$expected_name = $table === "roster" || $table === "events" ? $expected_row['name'] : $expected_row['title'];
+	$expected_name = $table === "MB_List" || $table === "roster" || $table === "events" ? $expected_row['name'] : $expected_row['title'];
+	if ($table === "MB_Counselors") {
+		$counselor_id = $mysqli->query("SELECT * FROM MB_Counselors WHERE id=$id")->fetch_assoc()['counselor_id'];
+		$expected_name = $mysqli->query("SELECT * FROM roster WHERE id=$counselor_id")->fetch_assoc()['name'];
+		$badge = $mysqli->query("SELECT * FROM MB_Counselors WHERE id=$id")->fetch_assoc()['badge'];
+	}
 
 	if ($input_attempt === $expected_name) {
 		$statement = $mysqli->prepare("DELETE FROM `$table` WHERE id=?");
@@ -38,6 +43,15 @@ if (isset($_POST['name'])) {
 		send_mail($to, $subject, $text, $html);
 
 		header("Location: ../calendar.php");
+
+	// for merit badges
+	} else if ($table === "MB_List") {
+		header("Location: ../counselors.php");
+
+	// for mb counselors
+	} else if ($table === "MB_Counselors") {
+		$badge = urlencode($badge);
+		header("Location: ../counselors.php?badge=$badge");
 
 	// for blog posts (table name varies) 
 	} else {

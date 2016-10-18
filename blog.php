@@ -65,7 +65,7 @@ $blognameurl = urlencode($blogname);
                   //   echo "<img src='$image'>";
                   // }
                   
-                  echo "<p>$content</p>";
+                  echo "<pre>$content</pre>";
                   if ($_SESSION['permissions'] >= 1) {
                       echo "<button class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#mainModal\" data-change-type=\"Edit\" data-post-info=\"".htmlspecialchars(json_encode(array($article)), ENT_QUOTES, 'UTF-8')."\" data-blogname=\"$blognameurl\">Edit Post</button>";
                       echo "     ";
@@ -100,10 +100,6 @@ $blognameurl = urlencode($blogname);
                 <label for="postContent">Write Post Here:</label>
                 <textarea class="form-control" id="postContent" rows="20" name="content"></textarea>
             </div>
-            <!-- <div class="form-group">
-              <label>Upload image (optional):</label>
-              <input type="file" name="imageUpload" id="imageUpload">
-            </div> -->
             <input type="hidden" name="date" value= <?php
                 date_default_timezone_set('America/Chicago');
                 $date = date('m/d/Y h:i a');

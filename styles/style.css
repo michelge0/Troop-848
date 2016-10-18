@@ -365,7 +365,7 @@ hr {
 
 /** dashboard **/
 
-.dashboard-email {
+.dashboard-form {
 	margin-top: 65px;
 	width: 30%;
 }
@@ -379,4 +379,23 @@ hr {
 .roster-patrols {
 	margin-top: 100px;
 	width: 40%;
+}
+
+/** blogs **/
+
+/* remove styling */
+pre {
+	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+	background-color: #C9BBA5;
+	color: #331700;
+	border: none;
+	font-size: 15pt;
+}
+
+/** merit badges */
+
+.mb-link {
+	display: inline-block;
+	margin-right: 30px;
+	float: right;
 }

@@ -14,7 +14,6 @@ if (isset($_POST['column'])) {
     $mysqli->query("UPDATE email_preferences SET $column=$value WHERE email='$email'");
 }
 
-
 $oncreate = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'")->fetch_assoc()['oncreate'];
 $ondelete = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'")->fetch_assoc()['ondelete'];
 $onedit = $mysqli->query("SELECT * FROM email_preferences WHERE email='$email'")->fetch_assoc()['onedit'];
@@ -96,7 +95,7 @@ if (isset($_POST['sendMail'])) {
         <?php endif; ?>
     </div>
 
-    <div class="dashboard-email">
+    <div class="dashboard-form">
         <h3> Email My Patrol </h3>
         <form method="POST">
             <input type="hidden" name="sendMail" value="patrol">
@@ -114,7 +113,7 @@ if (isset($_POST['sendMail'])) {
 
     <!-- Editors / Admins only -->
     <?php if ($_SESSION["permissions"] >= 1) : ?>
-    <div class="dashboard-email">
+    <div class="dashboard-form">
         <h3> Email Entire Troop </h3>
         <form method="POST">
             <input type="hidden" name="sendMail" value="troop">
@@ -130,6 +129,41 @@ if (isset($_POST['sendMail'])) {
         </form>
     </div>
     <?php endif; ?>
+
+<?php
+    $id = $_SESSION["id"];
+    $user = $mysqli->query("SELECT * FROM roster WHERE id=$id")->fetch_assoc();
+?>  
+<div class="dashboard-form">
+    <h3> Edit Personal Information </h3>
+    <p> Below you can edit the information that will be available to the whole troop on the roster page. All information is protected and cannot be viewed by anyone outside the troop. When you're done making changes, hit "Submit Edits" to save your changes. </p>
+
+    <form id="changeForm" action="maintenance/update-roster.php?type=edit" method="POST">
+        <div class="form-group">
+            <label for="userName">Name:</label> 
+            <input type="text" class="form-control" id="userName" name="name" value=<?php echo "\"".$user['name']."\"";?>>
+        </div>
+        <div class="form-group">
+            <label for="userEmail">Email (emails will be sent to this address):</label>
+            <input type="text" class="form-control" id="userEmail" name="email" value=<?php echo "\"".$user['email']."\"";?>>
+        </div>
+        <div class="form-group">
+            <label for="userLoginEmail">Login Email (email you use for logging in--must be Gmail):</label>
+            <input type="text" class="form-control" id="userLoginEmail" name="loginEmail" value=<?php echo "\"".$user['login_email']."\"";?>>
+        </div>
+        <div class="form-group">
+            <label for="userEmail">Address:</label>
+            <input type="text" class="form-control" id="userAddress" name="address" value=<?php echo "\"".$user['address']."\"";?>>
+        </div>
+        <div class="form-group">
+            <label for="userEmail">Phone:</label>
+            <input type="text" class="form-control" id="userPhone" name="phone" value=<?php echo "\"".$user['phone']."\"";?>>
+        </div>
+        <input type="hidden" name="patrol" value=<?php echo "\"".$user['patrol']."\"";?>>
+        <input type="hidden" name="permissions" value=<?php echo "\"".$user['permissions']."\"";?>>
+        <input type="submit" class="btn btn-primary" value="Submit Edits">
+    </form>
+</div>
 
 </div>
 </body>

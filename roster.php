@@ -14,6 +14,9 @@
 <?php require('header.php'); ?>
 
 <div class="content">
+
+<!-- SCOUTS  -->
+<h1 style="color: rgb(150, 0, 0)"> Scouts </h1>
 <div class="table-responsive table-hover">
   <table class="table">
     <thead>
@@ -28,10 +31,65 @@
     </thead>
     <tbody>
     <?php
-    	$result = $mysqli->query("SELECT * FROM roster")->fetch_all(MYSQLI_ASSOC);
+    	$result = $mysqli->query("SELECT * FROM roster WHERE NOT patrol='Adults'")->fetch_all(MYSQLI_ASSOC);
 			if ($result) {
 				usort($result, function($a, $b) {
-				    return strcmp($a['patrol'], $b['patrol']) == 0 ? strcmp($a['name'], $b['name']) : strcmp($a['patrol'], $b['patrol']);
+					$last_name_a = array_pop(explode(' ', $a['name']));
+					$last_name_b = array_pop(explode(' ', $b['name']));
+				    return strcmp($a['patrol'], $b['patrol']) == 0 ? strcmp($last_name_a, $last_name_b) : strcmp($a['patrol'], $b['patrol']);
+				});
+
+				for ($i = 0; $i < count($result); $i++) {
+					echo "<tr>";
+					$row = $result[$i];
+					$name = $row['name'];
+					$email = $row['email'];
+					$phone = $row['phone'];
+					$address = $row['address'];
+					$patrol = $row['patrol'];
+					$permissions = $row['permissions'];
+					echo "<td>$name</td>";
+					echo "<td>$patrol</td>";
+					echo "<td>$email</td>";
+					echo "<td>$phone</td>";
+					echo "<td>$address</td>";
+					echo "<td>$permissions</td>";
+
+					if ($_SESSION['permissions'] === 2) {
+						$id = $row['id'];
+						echo "<td><button class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#mainModal\" data-change-type=\"Edit\" data-user-info=\"".htmlspecialchars(json_encode(array($row)), ENT_QUOTES, 'UTF-8')."\">Edit User</button>";
+						echo "     ";
+						echo "<button class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#deleteModal\" data-id=\"$id\">Delete</button></td>";
+					}
+				}
+			}
+    ?>
+    </tbody>
+  </table>
+</div>
+
+<!-- ADULTS  -->
+<h1 style="color: rgb(150, 0, 0)"> Adults </h1>
+<div class="table-responsive table-hover">
+  <table class="table">
+    <thead>
+    	<tr>
+	        <th>Name</th>
+	        <th>Patrol</th>
+	        <th>Email</th>
+	        <th>Phone</th>
+	        <th>Address</th>
+	        <th>Site Rank</th>
+    	</tr>
+    </thead>
+    <tbody>
+    <?php
+    	$result = $mysqli->query("SELECT * FROM roster WHERE patrol='Adults'")->fetch_all(MYSQLI_ASSOC);
+			if ($result) {
+				usort($result, function($a, $b) {
+					$last_name_a = array_pop(explode(' ', $a['name']));
+					$last_name_b = array_pop(explode(' ', $b['name']));
+				    return strcmp($a['patrol'], $b['patrol']) == 0 ? strcmp($last_name_a, $last_name_b) : strcmp($a['patrol'], $b['patrol']);
 				});
 
 				for ($i = 0; $i < count($result); $i++) {

@@ -62,7 +62,7 @@ require('helper/database-helper.php');
             	$post = $allposts[$i];
         	    $title = $post['title'];
                 $date = $post['date'];
-                $content = $post['content'];
+                $content = nl2br($post['content']);
                 $author = $post['author'];
                 echo "<div class=\"post\">";
                 echo "<h2>$title</h2>";

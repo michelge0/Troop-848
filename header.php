@@ -10,7 +10,13 @@
 
 <ul class="nav-bar" data-spy="affix" data-offset-top="160">
 <li><a href="index.php">Home</a></li>
-<li><a href="roster.php">Roster</a></li>
+<li class="dropdown-link">
+	Resources
+	<div class="dropdown-content">
+		<a href="roster.php">Roster</a>
+		<a href="counselors.php">Merit Badge Counselors</a>
+	</div>
+</li>
 <li class="dropdown-link">
 	Scouting
 	<div class="dropdown-content">
