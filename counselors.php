@@ -86,7 +86,10 @@
 						echo "<td>$email</td>";
 						echo "<td>$phone</td>";
 						echo "<td>$address";
-						echo "<button class='btn btn-danger mb-link' data-toggle='modal' data-target='#deleteCounselorModal' data-id='$id'>Delete Counselor</button>";
+
+						if ($_SESSION['permissions'] >= 1) {
+							echo "<button class='btn btn-danger mb-link' data-toggle='modal' data-target='#deleteCounselorModal' data-id='$id'>Delete Counselor</button>";
+						}
 						echo "</td></tr>";
 	    			}
     			}
