@@ -4,12 +4,12 @@ include('../helper/database-helper.php');
 
 if (isset($_POST['name'])) {
 	$name = trim($_POST['name']);
-	$email = $_POST['email'];
-	$login_email = $_POST['loginEmail'];
-	$address = $_POST['address'];
-	$phone = $_POST['phone'];
-	$patrol = $_POST['patrol'];
-	$permissions = $_POST['permissions'];
+	$email = $_POST['email'] ? "";
+	$login_email = $_POST['loginEmail'] ? "";
+	$address = $_POST['address'] ? "";
+	$phone = $_POST['phone'] ? "";
+	$patrol = $_POST['patrol'] ? "Unassigned";
+	$permissions = $_POST['permissions'] ? "User";
 
 	$type = $_GET['type'];
 
