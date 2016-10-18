@@ -91,7 +91,11 @@
 	    			}
     			}
 			?>
+
+			<?php if ($_SESSION['permissions'] >= 1) : ?>
 			<button class='btn btn-default' data-toggle='modal' data-target='#addCounselorModal' data-id='$id'>Add Counselor</button>
+			<?php endif; ?>
+
     		</tbody>
   		</table>
 		</div>
@@ -113,13 +117,19 @@
 			$id = $merit_badges[$i]["id"];
 			echo "<li class='list-group-item'>$name";
 			echo "<a href='counselors.php?badge=$url'><button class='btn btn-default mb-link'>Counselors >></button></a>";
-			echo "<button class='btn btn-danger mb-link' data-toggle='modal' data-target='#deleteModal' data-id='$id'>Delete MB</button>";
+
+			if ($_SESSION['permissions'] >= 1) {
+				echo "<button class='btn btn-danger mb-link' data-toggle='modal' data-target='#deleteModal' data-id='$id'>Delete MB</button>";
+			}	
+
 			echo "</li>";
 		}
 	}
 	?>
 	</ul>
-	<button class='btn btn-default' data-toggle='modal' data-target='#addMBModal' data-id='$id'>New MB</button>
+
+<?php if ($_SESSION['permissions'] >= 1) : ?>
+<button class='btn btn-default' data-toggle='modal' data-target='#addMBModal' data-id='$id'>New MB</button>
 
 <!-- delete merit badge modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -234,6 +244,8 @@
     </div>
   </div>
 </div>
+
+<?php endif; ?>
 
 </div>
 </body>
