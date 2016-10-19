@@ -31,7 +31,7 @@ if (isset($_POST['name'])) {
 
 	}
 
-	//header("Location: ../roster.php");
+	header("Location: ../roster.php");
 	die();
 
 } else {
