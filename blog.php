@@ -47,9 +47,10 @@ $blognameurl = urlencode($blogname);
           $blogname = $mysqli->query("SELECT * FROM blogs WHERE id=$blogid")->fetch_all(MYSQLI_ASSOC)[0]['blogname'];
 
           $query = "SELECT * FROM `$blogname`";
-          $result = $mysqli->query($query);
+          $result = $mysqli->query($query)->fetch_all(MYSQLI_ASSOC);
           if ($result) {
-              while ($article = $result->fetch_assoc()) {
+              for ($i = count($result) - 1; $i >= 0; $i--) {
+                  $article = $result[$i];
                   $title = $article['title'];
                   $date = $article['date'];
                   $content = nl2br($article['content']);
