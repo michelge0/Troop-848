@@ -55,7 +55,7 @@ require('helper/database-helper.php');
             		return 0;
             	}
 
-            	return $adate < $bdate ? -1 : 1;
+            	return $adate < $bdate ? 1 : -1;
             });
 
             for ($i = 0; $i < count($allposts); $i++) {

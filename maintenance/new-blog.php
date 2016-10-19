@@ -23,7 +23,7 @@ if (isset($_POST['name'])) {
 	$statement2->bind_param("ss", $name, $category);
 	$statement2->execute();
 
-	$blogid = $mysqli->query("SELECT * FROM blogs WHERE blogname='$name' AND category='$category'")->fetch_assoc()['id'];
+	$blogid = $mysqli->query("SELECT * FROM blogs WHERE blogname=`$name` AND category=`$category`")->fetch_assoc()['id'];
 
 	header("Location: ../blog.php?blogid=$blogid");
 	die();
